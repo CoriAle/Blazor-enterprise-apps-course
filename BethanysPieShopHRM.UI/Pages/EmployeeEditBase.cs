@@ -49,6 +49,10 @@ namespace BethanysPieShopHRM.UI.Pages
             JobCategories = (await JobCategoryDataService.GetAllJobCategories()).ToList();
 
             int.TryParse(EmployeeId, out var employeeId);
+            if (EmployeeDataService.SavedEmployee != null)
+            {
+                Employee = EmployeeDataService.SavedEmployee;
+            }
 
             if (employeeId == 0) //new employee is being created
             {
@@ -109,10 +113,17 @@ namespace BethanysPieShopHRM.UI.Pages
 
             Saved = true;
         }
+        protected void TempSave()
+        {
+            EmployeeDataService.SavedEmployee = Employee;
+            NavigationManager.NavigateTo("/employeeoverview");
+        }
+
 
         protected void NavigateToOverview()
         {
             NavigationManager.NavigateTo("/employeeoverview");
         }
+
     }
 }
